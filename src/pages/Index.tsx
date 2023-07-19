@@ -1,8 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { StoreState } from "../state/store";
 import { decrement, increment } from "../state/reducers/counter";
+import { useEffect } from "react";
+import HttpClient from "../utils/http";
 
-const IndexPage = (props) => {
+export interface IndexPageProps {}
+
+const IndexPage = (_: IndexPageProps) => {
 	const dispatch = useDispatch();
 
 	const state = useSelector((state: StoreState) => state.counter);
@@ -15,12 +19,20 @@ const IndexPage = (props) => {
 		dispatch(decrement());
 	};
 
+	useEffect(() => {
+		HttpClient.getClient()
+			.get("/users", {})
+			.then((response) => {
+				console.log(response.data);
+			});
+	}, []);
+
 	return (
 		<div>
 			<h1>Hello World</h1>
 			<div>
 				<p>CLick to update the counter</p>
-				<p>Counter: {state.counter}</p>
+				<p data-testid="counter-display">Counter: {state.counter}</p>
 				<button onClick={handleIncrement}>Increment!</button>
 				<button onClick={handleDecrement}>Decrement!</button>
 			</div>
