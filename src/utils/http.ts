@@ -1,4 +1,5 @@
 import { Axios } from "axios";
+import config from "../config";
 
 export default class HttpClient {
 	private static INSTANCE: Axios;
@@ -6,7 +7,7 @@ export default class HttpClient {
 	static getClient(): Axios {
 		if (this.INSTANCE == null) {
 			this.INSTANCE = new Axios({
-				baseURL: "https://64b7e23621b9aa6eb07936ca.mockapi.io",
+				baseURL: config.baseUrl,
 				headers: {},
 			});
 		}

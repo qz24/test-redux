@@ -3,6 +3,7 @@ import { StoreState } from "../state/store";
 import { decrement, increment } from "../state/reducers/counter";
 import { useEffect } from "react";
 import HttpClient from "../utils/http";
+import { fetchUsersAction } from "../state/sagas";
 
 export interface IndexPageProps {}
 
@@ -20,11 +21,7 @@ const IndexPage = (_: IndexPageProps) => {
 	};
 
 	useEffect(() => {
-		HttpClient.getClient()
-			.get("/users", {})
-			.then((response) => {
-				console.log(response.data);
-			});
+		dispatch(fetchUsersAction());
 	}, []);
 
 	return (
